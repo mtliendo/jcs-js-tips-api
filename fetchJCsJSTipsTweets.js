@@ -36,7 +36,7 @@ const fetchJCsJSTipsTweets = async (
     )
   })
 
-  return data.toArray()
+  return data.toArray() // this method has to be called, otherwise cheerio objects get returned
 }
 
 module.exports.fetchJCsJSTipsTweets = fetchJCsJSTipsTweets

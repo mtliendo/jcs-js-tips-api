@@ -6,7 +6,6 @@ const PORT = process.env.PORT || 8888
 
 app.get('/jcs-js-tips', async (req, res) => {
   const tipsJSON = await fetchJCsJSTipsTweets()
-  console.log(tipsJSON)
   res.json(tipsJSON)
 })
 
