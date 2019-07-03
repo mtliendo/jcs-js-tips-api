@@ -11,8 +11,8 @@ const fetchJCsJSTipsTweets = async (
   // hashtags = 'JCsJSTips'
   // From these accounts = 'jchiatt'
   // 👇🏾👆🏾
-  const JCS_JS_TIPS_ENDPOINT = `https://twitter.com/search?f=tweets&vertical=default&q=%23JCsJSTips%20from%3Ajchiatt%20since%3A${startDate}%20until%3A${endDate}&src=typd`
-
+  //const JCS_JS_TIPS_ENDPOINT = `https://twitter.com/search?f=tweets&vertical=default&q=%23JCsJSTips%20from%3Ajchiatt%20since%3A${startDate}%20until%3A${endDate}&src=typd`
+  const JCS_JS_TIPS_ENDPOINT = `https://twitter.com/search?l=&q=%23JCsJSTips%2C%20OR%20%23JavaScript%20from%3Ajchiatt%20since%3A${startDate}%20until%3A${endDate}&src=typd`
   const { data: html } = await axios.get(JCS_JS_TIPS_ENDPOINT)
 
   // Parse the DOM to get the deets.
