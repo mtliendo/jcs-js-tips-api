@@ -1,6 +1,7 @@
 const axios = require('axios')
 const format = require('date-fns/format')
 const cheerio = require('cheerio')
+const convertToDate = require('./utils/convert-to-date')
 
 //if no args given, start search on the 1st of June up until today.
 const fetchJCsJSTipsTweets = async (
@@ -19,6 +20,11 @@ const fetchJCsJSTipsTweets = async (
   const $ = cheerio.load(html)
   const data = $('.content', '#timeline').map((index, tweetBlock) => {
     const displayDate = $('.tweet-timestamp', tweetBlock).attr('title')
+    const tweet = $('div .TweetTextSize', tweetBlock).text()
+    if (tweet.includes("#JavaScript","#JCsJSTips")) {
+      console.log(displayDate)
+      var g =  tweet
+    }
     const fuzzyTimestamp = format(displayDate.split('-')[1].trim(), 'X')
     const challengeImg = $(
       '.AdaptiveMedia-photoContainer.js-adaptive-photo',
@@ -36,7 +42,11 @@ const fetchJCsJSTipsTweets = async (
     )
   })
 
-  return data.toArray() // this method has to be called, otherwise cheerio objects get returned
+  return data.toArray().sort(function (cur, past) {
+    return  convertToDate(past) - convertToDate(cur); //sort by date
+  }) // had to call toArray on data, otherwise cheerio objects get returned
+
 }
+
 
 module.exports.fetchJCsJSTipsTweets = fetchJCsJSTipsTweets

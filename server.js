@@ -9,6 +9,10 @@ app.get('/jcs-js-tips', async (req, res) => {
   res.json(tipsJSON)
 })
 
+app.get('/js-lessons?', (req, res) => {
+  res.json(req.query)
+})
+
 app.listen(PORT, () => {
   console.log('app started on port', PORT)
 })
