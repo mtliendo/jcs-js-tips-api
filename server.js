@@ -9,8 +9,20 @@ app.get('/jcs-js-tips', async (req, res) => {
   res.json(tipsJSON)
 })
 
-app.get('/js-lessons?', (req, res) => {
-  res.json(req.query)
+app.get('/js-lessons', async (req, res) => {
+  if (req.query.tags) {
+    let tags = req.query.tags.split(',')
+    let tipsJSON = await fetchJCsJSTipsTweets()
+    tipsJSON = tipsJSON.filter((tip) => {
+      if (tags.some((tag) => tip.tweetText.toLowerCase().includes(tag.toLowerCase()))) {
+        return tip
+      }  
+    })
+    
+    return res.json(tipsJSON) 
+  }
+  
+  res.json("no such content")
 })
 
 app.listen(PORT, () => {

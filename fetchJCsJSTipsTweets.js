@@ -6,7 +6,6 @@ const convertToDate = require('./utils/convert-to-date')
 //if no args given, start search on the 1st of June up until today.
 const fetchJCsJSTipsTweets = async (
   startDate = '2019-06-01',
-  endDate = format(new Date(), 'YYYY-MM-DD')
 ) => {
   // https://twitter.com/search-advanced
   // hashtags = 'JCsJSTips'
@@ -20,11 +19,7 @@ const fetchJCsJSTipsTweets = async (
   const $ = cheerio.load(html)
   const data = $('.content', '#timeline').map((index, tweetBlock) => {
     const displayDate = $('.tweet-timestamp', tweetBlock).attr('title')
-    const tweet = $('div .TweetTextSize', tweetBlock).text()
-    if (tweet.includes("#JavaScript","#JCsJSTips")) {
-      console.log(displayDate)
-      var g =  tweet
-    }
+    const tweetText = $('div .TweetTextSize', tweetBlock).text()
     const fuzzyTimestamp = format(displayDate.split('-')[1].trim(), 'X')
     const challengeImg = $(
       '.AdaptiveMedia-photoContainer.js-adaptive-photo',
@@ -35,6 +30,7 @@ const fetchJCsJSTipsTweets = async (
 
     return (
       challengeImg && {
+        tweetText,
         displayDate,
         fuzzyTimestamp, // because I got lazy and didn't want to spend the time to parse the full string.
         challengeImg
